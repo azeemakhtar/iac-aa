@@ -120,24 +120,39 @@ module taskmanagementservice '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
-output groupExtensionservicePrincipalId string = groupextensionservice.outputs.principalId
-output dependencyFinderPrincipalId string = environment == 'dev' ? dependencyfinder.outputs.principalId : ''
-output selfServicePortalPrincipalId string = selfserviceportal.outputs.principalId
-output selfServiceApiPrincipalId string = selfserviceapi.outputs.principalId
+module formsService '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-formsservice-${environment}-${buildNumber}'
+  params: {
+    appName: 'formsservice'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
+
 output bisnodeAdapterApiPrincipalId string = bisnodeadapterapi.outputs.principalId
-output trapetsAdapterApiPrincipalId string = trapetsadapterapi.outputs.principalId
 output clientLifecycleServicePrincipalId string = clientlifecycleservice.outputs.principalId
 output clientPortalPrincipalId string = clientportal.outputs.principalId
+output dependencyFinderPrincipalId string = environment == 'dev' ? dependencyfinder.outputs.principalId : ''
+output formsServicePrincipalId string = formsService.outputs.principalId
+output groupExtensionservicePrincipalId string = groupextensionservice.outputs.principalId
+output selfServiceApiPrincipalId string = selfserviceapi.outputs.principalId
+output selfServicePortalPrincipalId string = selfserviceportal.outputs.principalId
 output sqlMigratorPrincipalId string = dbmigration.outputs.principalId
 output taskManagementPrincipalId string = taskmanagementservice.outputs.principalId
+output trapetsAdapterApiPrincipalId string = trapetsadapterapi.outputs.principalId
+
 
 output clmIds array = [
-  groupextensionservice.outputs.principalId
-  selfserviceportal.outputs.principalId
-  selfserviceapi.outputs.principalId
   bisnodeadapterapi.outputs.principalId
-  trapetsadapterapi.outputs.principalId
   clientlifecycleservice.outputs.principalId
   clientportal.outputs.principalId
   dbmigration.outputs.principalId
-  taskmanagementservice.outputs.principalId]
+  formsService.outputs.principalId
+  groupextensionservice.outputs.principalId
+  selfserviceapi.outputs.principalId
+  selfserviceportal.outputs.principalId
+  taskmanagementservice.outputs.principalId
+  trapetsadapterapi.outputs.principalId
+]
