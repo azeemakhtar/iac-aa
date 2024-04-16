@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "onboarding",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "deposits",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "marketdata",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "price-history",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "companyfacts",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "portfolio",
+                    "skuName": "S3"
+                }
+            ]
+        },
+        "nftnsSku": {
+            "value": "Basic"
+        },
+        "sqlAdmGroup": {
+            "value": "91bc6adf-ccef-4ec9-8e35-4e3e5cde85a2"
+        },
+        "signalRSku": {
+            "value":  {
+                "name": "Standard_S1",
+                "tier": "Standard"
+            }
+        }
+    }
+}

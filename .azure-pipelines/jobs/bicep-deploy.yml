@@ -1,0 +1,52 @@
+parameters:
+  - name: environment
+    type: string
+    values:
+      - dev
+      - test
+      - preprod
+      - prod
+      - shared
+
+  - name: serviceConnection
+    type: string
+    # values:
+    #   - $(serviceConnection_dev)
+    #   - $(serviceConnection_test)
+    #   - $(serviceConnection_preprod)
+    #   - $(serviceConnection_prod)
+    #   - $(serviceConnection_shared)
+
+  - name: location
+    type: string
+    default: "westeurope"
+
+  - name: mainTemplate
+    type: string
+    default: "main.bicep"
+
+  - name: resourceGroupName
+    type: string
+
+  - name: additionalArguments
+    type: string
+    default: "--out yamlc --no-prompt"
+
+jobs:
+  - deployment: Deploy
+    pool:
+      name: $(agentPool)
+    environment: teamsiac-${{parameters.environment}}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+            - template: ../tasks/az-deploy.yml
+              parameters:
+                serviceConnection: ${{ parameters.serviceConnection }}
+                mainTemplate: $(templatelocation)/${{ parameters.mainTemplate }}
+                resourceGroupName: ${{ parameters.resourceGroupName }}
+                environment: ${{ parameters.environment }}
+                additionalArguments: ${{ parameters.additionalArguments }}
+                command: "create"

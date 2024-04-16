@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "curity",
+                    "skuName": "S2"
+                }
+            ]
+        },
+        "sqlAdmGroup":{
+            "value": "258da78c-3a48-46a3-b714-eebe465bfcb6"
+        }
+    }
+}

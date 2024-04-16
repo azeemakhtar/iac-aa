@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "marketdata",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "price-history",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "companyfacts",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "portfolio",
+                    "skuName": "Basic"
+                }
+            ]
+        },
+        "sqlAdmGroup":{
+            "value": "084185fb-7f4a-4ee3-81ee-95c998db6a22"
+        },
+        "nftnsSku": {
+            "value": "Free"
+        },
+        "signalRSku": {
+            "value":  {
+                "name": "Standard_S1",
+                "tier": "Standard"
+            }
+        }
+    }
+}

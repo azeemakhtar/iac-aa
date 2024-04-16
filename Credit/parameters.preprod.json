@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "creditactivity",
+                    "skuName": "Basic"
+                }
+    ]
+        },
+        "sqlAdmGroup":{
+            "value": "8b1e60d8-b2d9-41f6-ab19-8cc2838bb8c0"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "accounttransactions",
+                    "skuName": "Basic"
+                }
+            ]
+        },
+        "sqlAdmGroup": {
+            "value": "db5b3edc-a932-4405-93de-03e6c38f6cca"
+        }
+    }
+}

@@ -1,0 +1,130 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  paths:
+    include:
+      - Curity
+  branches:
+    include:
+      - main
+
+
+pool:
+  name: AzureDeploy
+
+
+variables:
+- template: ../.azure-pipelines/variables.yml
+  parameters:
+    teamName: curity
+  - name: devResourceGroup
+    value: 'rg-curity-dev-weu'
+  - name: testResourceGroup
+    value: 'rg-curity-test-weu'
+  - name: preprodResourceGroup
+    value: 'rg-curity-preprod-weu'
+  - name: prodResourceGroup
+    value: 'rg-curity-prod-weu'
+stages:
+  - stage: "Validate"
+    displayName: Validate
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-validate.yml
+        
+        parameters:
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName: $(devResourceGroup)
+          environment: dev
+          mainTemplate: ./Curity/main.bicep
+          additionalArguments:  --parameters ./Curity/parameters.dev.json
+
+  - stage: "DeployDev"
+    displayName: "Deploy to dev"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: dev
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName:  $(devResourceGroup)
+          mainTemplate: ./Curity/main.bicep
+          additionalArguments:  --parameters ./Curity/parameters.dev.json
+      - template: ../.azure-pipelines/jobs/aks-create-pv-secret.yml
+        parameters:
+          dependsOn: Deploy
+          environment: dev
+          kubernetesConnection: $(kubernetesConnection_dev)
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName:  $(devResourceGroup)
+          storageAccountName: stcuritydevweu
+          secretName: pv-azure-secret
+          namespace: curity
+  
+  - stage: "DeployTest"
+    displayName: "Deploy to test"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: test
+          serviceConnection: $(serviceConnection_test)
+          resourceGroupName:  $(testResourceGroup)
+          mainTemplate: ./Curity/main.bicep
+          additionalArguments:  --parameters ./Curity/parameters.test.json
+      - template: ../.azure-pipelines/jobs/aks-create-pv-secret.yml
+        parameters:
+          dependsOn: Deploy
+          environment: test
+          kubernetesConnection: $(kubernetesConnection_test)
+          serviceConnection: $(serviceConnection_test)
+          resourceGroupName:  $(testResourceGroup)
+          storageAccountName: stcuritytestweu
+          secretName: pv-azure-secret
+          namespace: curity
+
+  - stage: "DeployPreprod"
+    displayName: "Deploy to preprod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: preprod
+          serviceConnection: $(serviceConnection_preprod)
+          resourceGroupName:  $(preprodResourceGroup)
+          mainTemplate: ./Curity/main.bicep
+          additionalArguments:  --parameters ./Curity/parameters.preprod.json
+      - template: ../.azure-pipelines/jobs/aks-create-pv-secret.yml
+        parameters:
+          dependsOn: Deploy
+          environment: preprod
+          kubernetesConnection: $(kubernetesConnection_preprod)
+          serviceConnection: $(serviceConnection_preprod)
+          resourceGroupName:  $(preprodResourceGroup)
+          storageAccountName: stcuritypreprodweu
+          secretName: pv-azure-secret
+          namespace: curity
+
+  - stage: "DeployProd"
+    displayName: "Deploy to prod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: prod
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          mainTemplate: ./Curity/main.bicep
+          additionalArguments:  --parameters ./Curity/parameters.prod.json
+      - template: ../.azure-pipelines/jobs/aks-create-pv-secret.yml
+        parameters:
+          dependsOn: Deploy
+          environment: prod
+          kubernetesConnection: $(kubernetesConnection_prod)
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          storageAccountName: stcurityprodweu
+          secretName: pv-azure-secret
+          namespace: curity

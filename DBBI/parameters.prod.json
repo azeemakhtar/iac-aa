@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ipRules": {
+            "value": [
+                {
+                    "value": "20.218.85.234",
+                    "action": "Allow"
+                },
+                {
+                    "value": "20.218.82.226",
+                    "action": "Allow"
+                },
+                {
+                    "value": "193.182.104.10",
+                    "action": "Allow"
+                }
+            ]
+        },
+        "firewallRules": {
+            "value": [
+                {
+                    "name": "CarnegieOutbound",
+                    "startIpAddress": "193.182.104.10",
+                    "endIpAddress": "193.182.104.10"
+                },
+                {
+                    "name": "PowerBI Sentinel EU 1",
+                    "startIpAddress": "20.218.85.234",
+                    "endIpAddress": "20.218.85.234"
+                },
+                {
+                    "name": "PowerBI Sentinel EU 2",
+                    "startIpAddress": "20.218.82.226",
+                    "endIpAddress": "20.218.82.226"
+                }
+            ]
+        }
+    }
+}

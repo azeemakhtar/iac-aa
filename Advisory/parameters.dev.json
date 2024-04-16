@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "promotedinstruments",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "investmentopportunity",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "corporateaction",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "featuretoggle",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "identityverification",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "clientinteractplanner",
+                    "skuName": "Basic"
+                }
+            ]
+        },
+        "sqlAdmGroup": {
+            "value": "088ed2c4-226f-4e3a-b32a-8645669078f8"
+        },
+        "identityVerificationId": {
+            "value": "58cff2b5-7439-46e5-8050-96eb70e6aeec"
+        }
+    }
+}

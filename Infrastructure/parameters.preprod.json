@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": []
+        },
+        "sqlAdmGroup": {
+            "value": "3c1bb701-6e2a-4d01-ad6a-6cfed7ace830"
+        }
+    }
+}

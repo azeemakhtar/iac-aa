@@ -1,0 +1,91 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  paths:
+    include:
+      - DBBI
+  branches:
+    include:
+      - main
+
+
+pool:
+  name: AzureDeploy
+
+
+variables:
+  - template: ../.azure-pipelines/variables.yml
+    parameters:
+      teamName: dbbi
+  - name: devResourceGroup
+    value: 'rg-dbbi-dev-weu'
+  - name: testResourceGroup
+    value: 'rg-dbbi-test-weu'
+  - name: preprodResourceGroup
+    value: 'rg-dbbi-preprod-weu'
+  - name: prodResourceGroup
+    value: 'rg-dbbi-prod-weu'
+stages:
+  - stage: "Validate"
+    displayName: Validate
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-validate.yml
+        
+        parameters:
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName: $(devResourceGroup)
+          environment: dev
+          mainTemplate: ./DBBI/main.bicep
+          additionalArguments:  --parameters ./DBBI/parameters.prod.json
+
+
+  # - stage: "DeployDev"
+  #   displayName: "Deploy to dev"
+  #   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  #   jobs:
+  #     - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+  #       parameters:
+  #         environment: dev
+  #         serviceConnection: $(serviceConnection_dev)
+  #         resourceGroupName:  $(devResourceGroup)
+  #         mainTemplate: ./DBBI/main.bicep
+  #         additionalArguments:  --parameters ./DBBI/parameters.dev.json
+  
+  # - stage: "DeployTest"
+  #   displayName: "Deploy to test"
+  #   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  #   jobs:
+  #     - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+  #       parameters:
+  #         environment: test
+  #         serviceConnection: $(serviceConnection_test)
+  #         resourceGroupName:  $(testResourceGroup)
+  #         mainTemplate: ./DBBI/main.bicep
+  #         additionalArguments:  --parameters ./DBBI/parameters.test.json
+
+  # - stage: "DeployPreprod"
+  #   displayName: "Deploy to preprod"
+  #   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  #   jobs:
+  #     - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+  #       parameters:
+  #         environment: preprod
+  #         serviceConnection: $(serviceConnection_preprod)
+  #         resourceGroupName:  $(preprodResourceGroup)
+  #         mainTemplate: ./DBBI/main.bicep
+  #         additionalArguments:  --parameters ./DBBI/parameters.preprod.json
+
+  - stage: "DeployProd"
+    displayName: "Deploy to prod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: prod
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          mainTemplate: ./DBBI/main.bicep
+          additionalArguments:  --parameters ./DBBI/parameters.prod.json

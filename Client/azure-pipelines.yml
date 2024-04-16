@@ -1,0 +1,85 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  paths:
+    include:
+      - Client
+  branches:
+    include:
+      - main
+
+
+pool:
+  name: AzureDeploy
+
+
+variables:
+- template: ../.azure-pipelines/variables.yml
+  parameters:
+    teamName: client
+  - name: devResourceGroup
+    value: 'rg-client-dev-weu'
+  - name: testResourceGroup
+    value: 'rg-client-test-weu'
+  - name: preprodResourceGroup
+    value: 'rg-client-preprod-weu'
+  - name: prodResourceGroup
+    value: 'rg-client-prod-weu'
+stages:
+  - stage: "Validate"
+    displayName: Validate
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-validate.yml
+        
+        parameters:
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName: $(devResourceGroup)
+          environment: dev
+          mainTemplate: ./Client/main.bicep
+
+  - stage: "DeployDev"
+    displayName: "Deploy to dev"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: dev
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName:  $(devResourceGroup)
+          mainTemplate: ./Client/main.bicep
+  
+  - stage: "DeployTest"
+    displayName: "Deploy to test"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: test
+          serviceConnection: $(serviceConnection_test)
+          resourceGroupName:  $(testResourceGroup)
+          mainTemplate: ./Client/main.bicep
+
+  - stage: "DeployPreprod"
+    displayName: "Deploy to preprod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: preprod
+          serviceConnection: $(serviceConnection_preprod)
+          resourceGroupName:  $(preprodResourceGroup)
+          mainTemplate: ./Client/main.bicep
+
+  - stage: "DeployProd"
+    displayName: "Deploy to prod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: prod
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          mainTemplate: ./Client/main.bicep

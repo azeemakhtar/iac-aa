@@ -1,0 +1,53 @@
+parameters:
+  - name: serviceConnection
+    type: string
+    values:
+      - $(serviceConnection_dev)
+      - $(serviceConnection_test)
+      - $(serviceConnection_preprod)
+      - $(serviceConnection_prod)
+      - $(serviceConnection_shared)
+
+  - name: environment
+    type: string
+    values:
+      - dev
+      - test
+      - preprod
+      - prod
+      - shared
+
+  - name: location
+    type: string
+    default: westeurope
+
+  - name: mainTemplate
+    type: string
+    default: main.bicep
+
+  - name: command
+    type: string
+    default: validate
+    values:
+      - validate
+      - what-if
+      - create
+
+  - name: additionalArguments
+    type: string
+    default: ""
+
+steps:
+  - task: AzureCLI@2
+    displayName: "az ${{ parameters.command }} deployment"
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      scriptType: "ps"
+      scriptLocation: "inlineScript"
+      workingDirectory: $(templatelocation)
+      inlineScript: |
+        az deployment sub ${{ parameters.command }} `
+          --location westeurope `
+          --template-file ${{ parameters.mainTemplate }} `
+          --parameters environment=${{ parameters.environment }} buildNumber=$(Build.BuildId) `
+          ${{ parameters.additionalArguments }}

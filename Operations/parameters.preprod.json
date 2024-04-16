@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "msci",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "cairocncfee",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "reqops",
+                    "skuName": "Basic"
+                },
+                {
+                    "name": "esg",
+                    "skuName": "Basic"
+                }
+            ]
+        },
+        "sqlAdmGroup":{
+            "value": "d7404f51-8a0e-4e54-a787-96fea7ff3591"
+        }
+    }
+}

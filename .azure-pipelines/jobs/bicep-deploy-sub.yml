@@ -1,0 +1,70 @@
+parameters:
+  - name: environment
+    type: string
+    values:
+      - dev
+      - test
+      - preprod
+      - prod
+      - shared
+
+  - name: serviceConnection
+    type: string
+    values:
+      - $(serviceConnection_dev)
+      - $(serviceConnection_test)
+      - $(serviceConnection_preprod)
+      - $(serviceConnection_prod)
+      - $(serviceConnection_shared)
+
+  - name: location
+    type: string
+    default: "westeurope"
+
+  - name: mainTemplate
+    type: string
+    default: "main.bicep"
+
+  - name: additionalArguments
+    type: string
+    default: "--out yamlc --no-prompt"
+
+jobs:
+  - deployment: Deploy
+    displayName: Deploy sub-${{parameters.environment}}
+    pool:
+      name: $(agentPool)
+    environment: sub-${{parameters.environment}}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+            
+            - task: PowerShell@2
+              inputs:
+                targetType: Inline
+                script: |
+                  Get-ChildItem * -Include groups.json -Recurse | Remove-Item
+                  #Remove-Item -Path ./base/groups.json' 
+            
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                source: 'current'
+                artifact: groups
+                path: $(templatelocation)
+
+            - task: PowerShell@2
+              inputs:
+                targetType: Inline
+                script: |
+                  dir
+                  Copy-Item "./groups.json" -Destination "./base"
+            
+            - template: ../tasks/az-deploy-sub.yml
+              parameters:
+                serviceConnection: ${{ parameters.serviceConnection }}
+                mainTemplate: $(templatelocation)/${{ parameters.mainTemplate }}
+                environment: ${{ parameters.environment }}
+                additionalArguments: ${{ parameters.additionalArguments }}
+                command: "create"

@@ -1,0 +1,42 @@
+parameters:
+  - name: skipTests
+    type: string
+    default: "Location Should Not Be Hardcoded, ResourceIds should not contain, VM Size should be a parameter"
+
+  - name: mainTemplate
+    type: string
+    default: "main.bicep"
+
+steps:
+  
+  - script: |
+      az bicep build -f $(templatelocation)/${{ parameters.mainTemplate }}
+      $files = Get-ChildItem -Path . -Filter main.bicep -Recurse
+      foreach ($file in $files) {
+          $dir = Split-Path $file.FullName
+          Set-Location $dir
+          $paramFile = $file.FullName.Replace(".bicep", ".params.json")
+          if (Test-Path $paramFile) {
+              az bicep build -f $file.FullName --parameters $paramFile
+          } else {
+              az bicep build -f $file.FullName
+          }
+      }
+
+    displayName: Run Bicep linter
+  
+  - task: RunARMTTKTests@1
+    displayName: "Run ARMTTK"
+    inputs:
+      templatelocation: $(templatelocation)
+      mainTemplates: ${{ parameters.mainTemplate }}
+      cliOutputResults: true
+      skipTests: ${{ parameters.skipTests }}
+
+  - task: PublishTestResults@2
+    displayName: "Publish Test Results"
+    inputs:
+      testRunTitle: "ARM-TTK"
+      testResultsFormat: "NUnit"
+      testResultsFiles: '**\*.xml'
+    condition: always()

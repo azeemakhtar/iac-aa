@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "clientlifecycle",
+                    "skuName": "S1"
+                },
+                {
+                    "name": "taskmanagement",
+                    "skuName": "S1"
+                }
+            ]
+        },
+        "sqlAdmGroup":{
+            "value": "ced501eb-2b58-41cd-9037-0e8174890240"
+        }
+    }
+}
+

@@ -1,0 +1,12 @@
+variables:
+  serviceConnection_dev: az-${{ parameters.teamName}}-adosvc-dev
+  serviceConnection_test: az-${{ parameters.teamName}}-adosvc-test
+  serviceConnection_preprod: az-${{ parameters.teamName}}-adosvc-preprod
+  serviceConnection_prod: az-${{ parameters.teamName}}-adosvc-prod
+  serviceConnection_shared: spn-azure-shared-subscription-contributor
+  kubernetesConnection_dev: spn-azure-aksservices-dev
+  kubernetesConnection_test: spn-azure-aksservices-test
+  kubernetesConnection_preprod: spn-azure-aksservices-preprod
+  kubernetesConnection_prod: spn-azure-aksservices-prod
+  templatelocation: $(System.DefaultWorkingDirectory)/${{ parameters.templatePath}}
+  agentPool: AzureDeploy
