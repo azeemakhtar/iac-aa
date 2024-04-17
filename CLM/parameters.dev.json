@@ -11,6 +11,10 @@
                 {
                     "name": "taskmanagement",
                     "skuName": "Basic"
+                },
+                {
+                    "name": "formsservice",
+                    "skuName": "Basic"
                 }
             ]
         },
