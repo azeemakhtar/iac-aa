@@ -112,6 +112,16 @@ module clientInteractPlanner '../_modules/identity/workloadidentity.bicep' = {
     tenantName: teamName
   }
 }
+module timingEventsGenerator '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-timingeventsgenerator-${environment}-${buildNumber}'
+  params: {
+    appName: 'timingeventsgenerator'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
 
 output advisorydbmigrationPrincipalId string = advisorydbmigration.outputs.principalId
 output auditloggingservicePrincipalId string = auditloggingservice.outputs.principalId
@@ -122,6 +132,7 @@ output identityverificationPrincipalId string = identityverification.outputs.pri
 output investmentOpportunityPrincipalId string = investmentOpportunity.outputs.principalId
 output pandaPrincipalId string = panda.outputs.principalId
 output promotedInstrumentsPrincipalId string = promotedInstruments.outputs.principalId
+output timingEventsGeneratorPrincipalId string = timingEventsGenerator.outputs.principalId
 
 output advisoryIds array = [
   advisorydbmigration.outputs.principalId
@@ -133,4 +144,5 @@ output advisoryIds array = [
   investmentOpportunity.outputs.principalId
   panda.outputs.principalId
   promotedInstruments.outputs.principalId
+  timingEventsGenerator.outputs.principalId
 ]
