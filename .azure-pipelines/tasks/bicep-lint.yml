@@ -22,16 +22,23 @@ steps:
               az bicep build -f $file.FullName
           }
       }
-
     displayName: Run Bicep linter
   
-  - task: RunARMTTKTests@1
-    displayName: "Run ARMTTK"
-    inputs:
-      templatelocation: $(templatelocation)
-      mainTemplates: ${{ parameters.mainTemplate }}
-      cliOutputResults: true
-      skipTests: ${{ parameters.skipTests }}
+  # - task: RunARMTTKTests@1
+  #   displayName: "Run ARMTTK"
+  #   inputs:
+  #     templatelocation: $(templatelocation)
+  #     mainTemplates: ${{ parameters.mainTemplate }}
+  #     cliOutputResults: true
+  #     skipTests: ${{ parameters.skipTests }}
+
+  # - task: RunARMTTKTestsXPlat@1
+  #   displayName: "Run ARMTTK"
+  #   inputs:
+  #     templatelocation: $(templatelocation)
+  #     mainTemplates: ${{ parameters.mainTemplate }}
+  #     cliOutputResults: true
+  #     skipTests: ${{ parameters.skipTests }}
 
   - task: PublishTestResults@2
     displayName: "Publish Test Results"

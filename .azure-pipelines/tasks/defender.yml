@@ -19,4 +19,5 @@ steps:
     displayName: 'Microsoft Security DevOps'
     inputs:
       break: false
-      
+      categories: 'IaC, containers'
+      # tools: 'iacfilescanner, templateanalyzer, trivy, terrascan'

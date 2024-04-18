@@ -1,5 +1,6 @@
 param keyVaultName string
 
+@secure()
 param secretName string
 
 @secure()

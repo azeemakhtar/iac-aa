@@ -1,4 +1,3 @@
-@description('Build number to use for tagging deployments')
 param buildNumber string
 
 param searchName string

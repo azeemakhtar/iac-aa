@@ -32,7 +32,6 @@ stages:
     displayName: Validate
     jobs:
       - template: ../.azure-pipelines/jobs/bicep-validate.yml
-        
         parameters:
           serviceConnection: $(serviceConnection_dev)
           resourceGroupName: $(devResourceGroup)
