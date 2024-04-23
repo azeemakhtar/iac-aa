@@ -91,7 +91,7 @@ module filePe 'storageaccount-file-pe.bicep' = if (usedAsFileShare) {
 module storagedatareader '../identity/roleAssignment.bicep' = if (teamSid != ''){
   name: '${teamSid}-blobdatareader-${buildNumber}'
   params: {
-    principalId: teamSid
+    principalIds: [teamSid]
     roleName: 'StorageBlobDataReader'
     principalType: 'Group'
   }

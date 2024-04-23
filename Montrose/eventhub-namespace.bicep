@@ -60,21 +60,21 @@ module eventHubNamespacePrivateDns '../_modules/network/privateDns.bicep' = {
   }
 }
 
-module azureEventHubsDataReceiver '../_modules/identity/roleAssignment.bicep' = [for principalId in eventHubsReceivers: {
-  name: '${principalId}-datareceiver-${buildNumber}'
+module azureEventHubsDataReceiver '../_modules/identity/roleAssignment.bicep' = {
+  name: 'evh-datareceiver-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: eventHubsReceivers
     roleName: 'AzureEventHubsDataReceiver'
     }
-  }]
+  }
 
-  module azureEventHubsDataSender '../_modules/identity/roleAssignment.bicep' = [for principalId in eventHubsSenders: {
-    name: '${principalId}-datawriter-${buildNumber}'
+  module azureEventHubsDataSender '../_modules/identity/roleAssignment.bicep' = { 
+    name: 'evh-datawriter-${buildNumber}'
     params: {
-      principalId: principalId
+      principalIds: eventHubsSenders
       roleName: 'AzureEventHubsDataSender'
     }
-  }]
+  }
 
 
 output eventHubNamespaceName string = eventHubNamespace.name

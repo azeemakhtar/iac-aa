@@ -46,6 +46,6 @@ module storageBlobDataContributor '../identity/roleAssignment.bicep' = {
   name: '${blobName}-blobcontributor-${buildNumber}'
   params: {
     roleName: 'StorageBlobDataContributor'
-    storageBlobDataContributors: storageBlobDataContributors
+    principalIds: storageBlobDataContributors
   }
 }

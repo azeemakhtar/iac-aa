@@ -71,22 +71,22 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   }
 }
 
-module redisContribuiter '../_modules/identity/roleAssignment.bicep' = [for principalId in signalRContribuiters: {
-  name: '${principalId}-sigcontribuitors-${buildNumber}'
+module sigrContribuiter '../_modules/identity/roleAssignment.bicep' =  {
+  name: '${signalRName}-contribuitors-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: signalRContribuiters
     roleName: 'SignalRWebPubSubContributor'
   }
-}]
+}
 
 
-module signalRAppServer '../_modules/identity/roleAssignment.bicep' = [for principalId in signalRContribuiters: {
-  name: '${principalId}-appserver-${buildNumber}'
+module signalRAppServer '../_modules/identity/roleAssignment.bicep' = {
+  name: '${signalRName}-appserver-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: signalRContribuiters
     roleName: 'SignalRAppServer'
   }
-}]
+}
 
 module signalRPrivateEndpoint '../_modules/network/privateendpoint.bicep' = {
   name: '${signalR.name}-privateendpoint-${buildNumber}'

@@ -85,13 +85,13 @@ module openAiPrivateDns '../network/privateDns.bicep' = {
   }
 }
 
-module cognitiveServicesOpenAIUser '../identity/roleAssignment.bicep' = [for principalId in cognitiveServicesOpenAIUsers: {
-  name: '${principalId}-openaiuser-${buildNumber}'
+module cognitiveServicesOpenAIUser '../identity/roleAssignment.bicep' = {
+  name: '${openAiName}-user-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: cognitiveServicesOpenAIUsers
     roleName: 'CognitiveServicesOpenAIUser'
   }
-}]
+}
 
 output openAiName string = openAi.name
 output openAiPrincipalId string = openAi.identity.principalId

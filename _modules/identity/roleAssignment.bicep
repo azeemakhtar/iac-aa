@@ -1,4 +1,4 @@
-param storageBlobDataContributors array
+param principalIds array
 
 param principalType string = 'ServicePrincipal'
 
@@ -7,13 +7,11 @@ param roleName string
 
 var roles = json(loadTextContent('../../base/roles.json'))
 var roleGuid = roles[roleName]
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [
-  for principalId in storageBlobDataContributors: {
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [ for principalId in principalIds: {
     name: guid(resourceGroup().id, principalId, roleGuid)
     properties: {
       principalId: principalId
       principalType: principalType
       roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', roleGuid)
     }
-  }
-]
+  }]

@@ -65,12 +65,12 @@ module frPrivateDns '../network/privateDns.bicep' = {
   }
 }
 
-module cognitiveServicesUser '../identity/roleAssignment.bicep' = [for principalId in cognitiveServicesUsers: {
-  name: '${principalId}-cogservicesuser-${buildNumber}'
+module cognitiveServicesUser '../identity/roleAssignment.bicep' = {
+  name: '${formRecognizerName}-user-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: cognitiveServicesUsers
     roleName: 'CognitiveServicesUser'
   }
-}]
+}
 
 output formRecognizerName string = formRecognizer.name

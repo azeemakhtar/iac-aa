@@ -68,28 +68,28 @@ module searchPrivateDns '../network/privateDns.bicep' = {
   }
 }
 
-module searchIndexDataReader '../identity/roleAssignment.bicep' = [for principalId in searchIndexDataReaders: {
-  name: '${principalId}-searchuser-${buildNumber}'
+module searchIndexDataReader '../identity/roleAssignment.bicep' = {
+  name: '${searchServiceName}-searchuser-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: searchIndexDataReaders
     roleName: 'SearchIndexDataReader'
   }
-}]
+}
 
-module searchIndexDataContributor '../identity/roleAssignment.bicep' = [for principalId in searchIndexDataContributors: {
-  name: '${principalId}-searchindexcontr-${buildNumber}'
+module searchIndexDataContributor '../identity/roleAssignment.bicep' = {
+  name: '${searchServiceName}-searchindexcontr-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: searchIndexDataContributors
     roleName: 'SearchIndexDataContributor'
   }
-}]
+}
 
-module searchServiceContributor '../identity/roleAssignment.bicep' = [for principalId in searchServiceContributors: {
-  name: '${principalId}-searchservicecontr-${buildNumber}'
+module searchServiceContributor '../identity/roleAssignment.bicep' =  {
+  name: '${searchServiceName}-searchservicecontr-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: searchServiceContributors
     roleName: 'SearchServiceContributor'
   }
-}]
+}
 
 output searchServiceName string = searchService.name

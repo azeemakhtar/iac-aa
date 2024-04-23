@@ -44,10 +44,10 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-04-15
   }]
 }
 
-module documentDBAccountContributor '../identity/roleAssignment.bicep' = [for principalId in documentDBAccountContributors: {
-  name: '${principalId}-doc-acc-contr-${buildNumber}'
+module documentDBAccountContributor '../identity/roleAssignment.bicep' = {
+  name: '${databaseName}-doc-acc-contr-${buildNumber}'
   params: {
-    principalId: principalId
+    principalIds: documentDBAccountContributors
     roleName: 'DocumentDBAccountContributor'
   }
-}]
+}
