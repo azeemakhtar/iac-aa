@@ -28,16 +28,16 @@ variables:
   - name: prodResourceGroup
     value: 'rg-montrose-prod-weu'
 stages:
-  # - stage: "Validate"
-  #   displayName: Validate
-  #   jobs:
-  #     - template: ../.azure-pipelines/jobs/bicep-validate.yml
-  #       parameters:
-  #         serviceConnection: $(serviceConnection_dev)
-  #         resourceGroupName: $(devResourceGroup)
-  #         environment: dev
-  #         mainTemplate: ./Montrose/main.bicep
-  #         additionalArguments:  --parameters ./Montrose/parameters.dev.json
+  - stage: "Validate"
+    displayName: Validate
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-validate.yml
+        parameters:
+          serviceConnection: $(serviceConnection_dev)
+          resourceGroupName: $(devResourceGroup)
+          environment: dev
+          mainTemplate: ./Montrose/main.bicep
+          additionalArguments:  --parameters ./Montrose/parameters.dev.json
 
   - stage: "DeployDev"
     displayName: "Deploy to dev"

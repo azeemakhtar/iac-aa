@@ -77,6 +77,7 @@ module sqlServer '../_modules/sql/sql.bicep' = {
     databases: [for database in sqlDatabases: {
       name: 'sqldb-${database.name}-${environment}-weu'
       skuName: database.skuName
+      storageInBytes: contains(database, 'storageInBytes') ? database.storageInBytes : -1
     }]
   }
 }

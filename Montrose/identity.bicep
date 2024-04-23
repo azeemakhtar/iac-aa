@@ -1,3 +1,6 @@
+@description('Build number to use for tagging deployments')
+param buildNumber string
+
 @description('Name of the environment')
 @allowed([ 'dev', 'test', 'preprod', 'prod' ])
 param environment string
@@ -5,8 +8,6 @@ param environment string
 @description('Location for all resources')
 param location string = resourceGroup().location
 
-@description('Build number to use for tagging deployments')
-param buildNumber string
 
 param teamName string
 
@@ -230,44 +231,44 @@ module treasuryTrustly '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
-output testPersonsPrincipalId string = testpersons.outputs.principalId
-output dbMigratorPrincipalId string = montrosedbmigrator.outputs.principalId
-output crmapiPrincipalId string = montroseCrmapi.outputs.principalId
 output apigatewayPrincipalId string = montroseApigateway.outputs.principalId
-output paymentsPrincipalId string = montrosePayments.outputs.principalId
-output paymentsCallbackPrincipalId string = montrosePaymentsCallback.outputs.principalId
-output onboardingPrincipalId string = montroseOnboarding.outputs.principalId
-output holdingsPrincipalId string = montroseHoldings.outputs.principalId
-output pricePrincipalId string = montrosePrice.outputs.principalId
-output portfolioPrincipalId string = montrosePortfolio.outputs.principalId
+output companyfactsPrincipalId string = companyfacts.outputs.principalId
+output crmapiPrincipalId string = montroseCrmapi.outputs.principalId
+output dbMigratorPrincipalId string = montrosedbmigrator.outputs.principalId
 output depositnotificationapiPrincipalId string = depositnotificationapi.outputs.principalId
-output webapiPrincipalId string = montroseWebapi.outputs.principalId
-output newsServicePrincipalId string = newsService.outputs.principalId
+output factsLoaderPrincipalId string = factsetLoader.outputs.principalId
+output holdingsPrincipalId string = montroseHoldings.outputs.principalId
 output marketdataFeederId string = marketdataFeeder.outputs.principalId
 output marketdataId string = marketdata.outputs.principalId
+output newsServicePrincipalId string = newsService.outputs.principalId
+output onboardingPrincipalId string = montroseOnboarding.outputs.principalId
+output paymentsCallbackPrincipalId string = montrosePaymentsCallback.outputs.principalId
+output paymentsPrincipalId string = montrosePayments.outputs.principalId
+output portfolioPrincipalId string = montrosePortfolio.outputs.principalId
 output priceHistoryId string = priceHistory.outputs.principalId
-output companyfactsPrincipalId string = companyfacts.outputs.principalId
-output factsLoaderPrincipalId string = factsetLoader.outputs.principalId
+output pricePrincipalId string = montrosePrice.outputs.principalId
+output testPersonsPrincipalId string = testpersons.outputs.principalId
 output treasuryTrustlyPrincipalId string = treasuryTrustly.outputs.principalId
+output webapiPrincipalId string = montroseWebapi.outputs.principalId
 
 output montroseIds array = [
-  testpersons.outputs.principalId
-  montrosedbmigrator.outputs.principalId
-  montroseCrmapi.outputs.principalId
+  companyfacts.outputs.principalId
+  depositnotificationapi.outputs.principalId
+  factsetLoader.outputs.principalId
+  marketdata.outputs.principalId
+  marketdataFeeder.outputs.principalId
   montroseApigateway.outputs.principalId
+  montroseCrmapi.outputs.principalId
+  montrosedbmigrator.outputs.principalId
+  montroseHoldings.outputs.principalId
+  montroseOnboarding.outputs.principalId
   montrosePayments.outputs.principalId
   montrosePaymentsCallback.outputs.principalId
-  montroseOnboarding.outputs.principalId
-  montroseHoldings.outputs.principalId
-  montrosePrice.outputs.principalId
   montrosePortfolio.outputs.principalId
-  depositnotificationapi.outputs.principalId
+  montrosePrice.outputs.principalId
   montroseWebapi.outputs.principalId
   newsService.outputs.principalId
-  marketdataFeeder.outputs.principalId
-  marketdata.outputs.principalId
   priceHistory.outputs.principalId
-  companyfacts.outputs.principalId
-  factsetLoader.outputs.principalId
+  testpersons.outputs.principalId
   treasuryTrustly.outputs.principalId
 ]

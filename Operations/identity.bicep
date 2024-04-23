@@ -1,3 +1,7 @@
+
+@description('Build number to use for tagging deployments')
+param buildNumber string
+
 @description('Name of the environment')
 @allowed([ 'dev', 'test', 'preprod', 'prod' ])
 param environment string
@@ -5,10 +9,8 @@ param environment string
 @description('Location for all resources')
 param location string = resourceGroup().location
 
-@description('Build number to use for tagging deployments')
-param buildNumber string
-
 param teamName string
+
 module holdingfundscreening '../_modules/identity/workloadidentity.bicep' = {
   name: 'wid-${teamName}-holdingfundscreening-${environment}-${buildNumber}'
   params: {

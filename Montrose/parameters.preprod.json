@@ -19,6 +19,15 @@
                 {
                     "name": "portfolio",
                     "skuName": "Basic"
+                },
+                {
+                    "name": "factset",
+                    "skuName": "S3",
+                    "storageInBytes": 536870912000
+                },
+                {
+                    "name": "news-service",
+                    "skuName": "Basic"
                 }
             ]
         },

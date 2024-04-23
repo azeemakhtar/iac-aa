@@ -27,6 +27,14 @@
                 {
                     "name": "portfolio",
                     "skuName": "S3"
+                },
+                {
+                    "name": "factset",
+                    "skuName": "P1"
+                },
+                {
+                    "name": "news-service",
+                    "skuName": "S1"
                 }
             ]
         },
