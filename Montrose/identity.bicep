@@ -219,6 +219,17 @@ module factsetLoader '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
+module treasuryTrustly '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-treasuryTrustly-${environment}-${buildNumber}'
+  params: {
+    appName: 'treasury-trustly'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
+
 output testPersonsPrincipalId string = testpersons.outputs.principalId
 output dbMigratorPrincipalId string = montrosedbmigrator.outputs.principalId
 output crmapiPrincipalId string = montroseCrmapi.outputs.principalId
@@ -237,6 +248,7 @@ output marketdataId string = marketdata.outputs.principalId
 output priceHistoryId string = priceHistory.outputs.principalId
 output companyfactsPrincipalId string = companyfacts.outputs.principalId
 output factsLoaderPrincipalId string = factsetLoader.outputs.principalId
+output treasuryTrustlyPrincipalId string = treasuryTrustly.outputs.principalId
 
 output montroseIds array = [
   testpersons.outputs.principalId
@@ -257,4 +269,5 @@ output montroseIds array = [
   priceHistory.outputs.principalId
   companyfacts.outputs.principalId
   factsetLoader.outputs.principalId
+  treasuryTrustly.outputs.principalId
 ]
