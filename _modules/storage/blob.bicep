@@ -42,10 +42,10 @@ resource blobContainer 'Microsoft.Storage/storageAccounts/blobServices/container
   }
 }
 
-module storageBlobDataContributor '../identity/roleAssignment.bicep' = [for principalId in storageBlobDataContributors: {
-  name: '${principalId}-blobcontributor-${buildNumber}'
+module storageBlobDataContributor '../identity/roleAssignment.bicep' = {
+  name: '${blobName}-blobcontributor-${buildNumber}'
   params: {
-    principalId: principalId
     roleName: 'StorageBlobDataContributor'
+    storageBlobDataContributors: storageBlobDataContributors
   }
-}]
+}
