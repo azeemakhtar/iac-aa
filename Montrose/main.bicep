@@ -100,7 +100,7 @@ module redis 'redis.bicep' = {
     buildNumber: buildNumber
     subnetId: subnet.id
     redisContribuiters: [ 
-      identity.outputs.marketdataId
+      identity.outputs.marketdataId, identity.outputs.portfolioPrincipalId
     ]
   }
 }
