@@ -1,0 +1,65 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  paths:
+    include:
+      - BusinessCentral
+  branches:
+    include:
+      - main
+
+pool:
+  name: AzureDeploy
+
+variables:
+  - template: ../.azure-pipelines/variables.yml
+    parameters:
+      teamName: businesscentral
+  - name: devResourceGroup
+    value: 'rg-businesscentral-dev-weu'
+  - name: testResourceGroup
+    value: 'rg-businesscentral-test-weu'
+  - name: preprodResourceGroup
+    value: 'rg-businesscentral-preprod-weu'
+  - name: prodResourceGroup
+    value: 'rg-businesscentral-prod-weu'
+stages:
+  - stage: "Validate"
+    displayName: Validate
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-validate.yml
+        parameters:
+          serviceConnection: $(serviceConnection_test)
+          resourceGroupName: $(testResourceGroup)
+          environment: dev
+          mainTemplate: ./BusinessCentral/main.bicep
+          additionalArguments:  --parameters ./BusinessCentral/parameters.test.json
+
+  - stage: "DeployTest"
+    displayName: "Deploy to test"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: test
+          serviceConnection: $(serviceConnection_test)
+          resourceGroupName:  $(testResourceGroup)
+          mainTemplate: ./BusinessCentral/main.bicep
+          additionalArguments:  --parameters ./BusinessCentral/parameters.test.json
+
+  
+  - stage: "DeployProd"
+    displayName: "Deploy to prod"
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - template: ../.azure-pipelines/jobs/bicep-deploy.yml
+        parameters:
+          environment: prod
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          mainTemplate: ./BusinessCentral/main.bicep
+          additionalArguments:  --parameters ./BusinessCentral/parameters.prod.json
+

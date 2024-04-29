@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sqlDatabases": {
+            "value": [
+                {
+                    "name": "temp",
+                    "skuName": "Basic"
+                }
+            ]
+        },
+        "sqlAdmGroup": {
+            "value": "9ade0161-feff-4d3a-8026-bac73d5996c6"
+        }
+    }
+}

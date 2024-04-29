@@ -129,8 +129,6 @@ module userPermissions './accesspolicy.bicep' = {
   }
 }
 
-
-
 module adminPermissions './accesspolicy.bicep'  = {
   name: 'kv-aa-${buildNumber}'
   params: {
