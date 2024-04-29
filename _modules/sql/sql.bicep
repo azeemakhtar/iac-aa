@@ -55,7 +55,7 @@ module sqlDB 'sqldb.bicep' = [for database in databases:  {
     dbName: database.name
     location: location
     skuName: database.skuName
-    storageInBytes: database.storageInBytes
+    storageInBytes: contains(database, 'storageInBytes') ? database.storageInBytes : -1
   }
 }]
 

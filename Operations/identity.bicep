@@ -132,29 +132,41 @@ module esgService '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
-output holdingfundscreeningPrincipalId string = holdingfundscreening.outputs.principalId
+module personalaccountdealingservice '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-personalaccountdealingservice-${environment}-${buildNumber}'
+  params: {
+    appName: 'personalaccountdealingservice'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
+
+output cairocncfeePrincipalId string = cairocncfee.outputs.principalId
 output cairofundscreeningPrincipalId string = cairofundscreening.outputs.principalId
 output depreciationserviceapiPrincipalId string = depreciationserviceapi.outputs.principalId
-output msciinstrumentadapterservicePrincipalId string = msciinstrumentadapterservice.outputs.principalId
-output cairocncfeePrincipalId string = cairocncfee.outputs.principalId
-output msciPrincipalId string = msci.outputs.principalId
-output fundscreeningServiceApiPrincipalId string = fundscreening.outputs.principalId
-output reqopsservicePrincipalId string = reqopsservice.outputs.principalId
-output operationsDbMigrationPrincipalId string = operationsDbmigration.outputs.principalId
-output tigerPrincipalId string = tiger.outputs.principalId
 output esgServicePrincipalId string = esgService.outputs.principalId
-
+output fundscreeningServiceApiPrincipalId string = fundscreening.outputs.principalId
+output holdingfundscreeningPrincipalId string = holdingfundscreening.outputs.principalId
+output msciinstrumentadapterservicePrincipalId string = msciinstrumentadapterservice.outputs.principalId
+output msciPrincipalId string = msci.outputs.principalId
+output operationsDbMigrationPrincipalId string = operationsDbmigration.outputs.principalId
+output personalaccountdealingservice string = personalaccountdealingservice.outputs.principalId
+output reqopsservicePrincipalId string = reqopsservice.outputs.principalId
+output tigerPrincipalId string = tiger.outputs.principalId
 
 output principalIds array = [
-  holdingfundscreening.outputs.principalId
+  cairocncfee.outputs.principalId
   cairofundscreening.outputs.principalId
   depreciationserviceapi.outputs.principalId
-  msciinstrumentadapterservice.outputs.principalId
-  cairocncfee.outputs.principalId
-  msci.outputs.principalId
-  fundscreening.outputs.principalId
-  reqopsservice.outputs.principalId
-  operationsDbmigration.outputs.principalId
-  tiger.outputs.principalId
   esgService.outputs.principalId
+  fundscreening.outputs.principalId
+  holdingfundscreening.outputs.principalId
+  msci.outputs.principalId
+  msciinstrumentadapterservice.outputs.principalId
+  operationsDbmigration.outputs.principalId
+  personalaccountdealingservice.outputs.principalId
+  reqopsservice.outputs.principalId
+  tiger.outputs.principalId
 ]
