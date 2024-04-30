@@ -111,3 +111,13 @@ stages:
           serviceConnection: $(serviceConnection_prod)
           resourceGroupName:  $(prodResourceGroup)
           mainTemplate: ./Enabler/main.bicep
+      - template: ../.azure-pipelines/jobs/aks-create-pv-secret.yml
+        parameters:
+          dependsOn: Deploy
+          environment: prod
+          kubernetesConnection: $(kubernetesConnection_prod)
+          serviceConnection: $(serviceConnection_prod)
+          resourceGroupName:  $(prodResourceGroup)
+          storageAccountName: stgrafanaprodweu
+          secretName: pv-azure-secret
+          namespace: enabler-prod
