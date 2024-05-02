@@ -17,7 +17,7 @@ pool:
 variables:
   - template: ../.azure-pipelines/variables.yml
     parameters:
-      teamName: chatcib
+      teamName: enabler
   - name: devResourceGroup
     value: 'rg-enabler-dev-weu'
   - name: testResourceGroup
