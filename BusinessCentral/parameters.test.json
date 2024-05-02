@@ -5,13 +5,42 @@
         "sqlDatabases": {
             "value": [
                 {
-                    "name": "temp",
+                    "name": "businesscentral",
                     "skuName": "Basic"
                 }
             ]
         },
         "sqlAdmGroup": {
             "value": "3da41a9b-a7de-4e43-9500-8c0a645f240c"
+        },
+        "sqlServerFirewallRules": {
+            "value": [
+                {
+                    "name": "VXO",
+                    "startIpAddress": "62.182.217.238",
+                    "endIpAddress": "62.182.217.238"
+                },
+                {
+                    "name": "GBG",
+                    "startIpAddress": "62.119.216.166",
+                    "endIpAddress": "62.119.216.166"
+                },
+                {
+                    "name": "STHLM",
+                    "startIpAddress": "79.142.254.162",
+                    "endIpAddress": "79.142.254.162"
+                },
+                {
+                    "name": "UME",
+                    "startIpAddress": "5.150.204.215",
+                    "endIpAddress": "5.150.204.215"
+                },
+                {
+                    "name": "MMO",
+                    "startIpAddress": "89.225.242.221",
+                    "endIpAddress": "89.225.242.221"
+                }
+            ]
         }
     }
 }

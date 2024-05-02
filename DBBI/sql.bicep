@@ -59,6 +59,7 @@ module sqlDB '../_modules/sql/sqldb.bicep' = {
     dbName: databaseName
     location: location
     skuName: 'S2'
+    storageInBytes: -1
   }
 }
 

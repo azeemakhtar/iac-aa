@@ -26,10 +26,18 @@ param databases array
 
 param azureADOnlyAuthentication bool = true
 
+param publicAccess bool = false
+
+param firewallRules array = []
+
 #disable-next-line no-hardcoded-env-urls
 var privateDnsZoneId = resourceId('ac5f16ed-4024-4b4c-ae78-0992d01c1f34', 'rg-privatednszones-shared-weu', 'Microsoft.Network/privateDnsZones', 'privatelink.database.windows.net')
 var serverName = 'sql-${teamName}-${environment}-weu'
 var admGroumName = 'az-grp-${teamName}-${environment}-sqladmin'
+
+
+
+
 
 resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   name: serverName
@@ -43,8 +51,15 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
       azureADOnlyAuthentication: azureADOnlyAuthentication
       principalType: 'Group'
     }
-    publicNetworkAccess: 'Disabled'
+    publicNetworkAccess: publicAccess ? 'Enabled' : 'Disabled'
   }
+  resource sqlFirewall 'firewallRules@2023-05-01-preview' = [for firewallRule in firewallRules: {
+    name: firewallRule.name
+    properties: {
+      startIpAddress: firewallRule.startIpAddress
+      endIpAddress: firewallRule.endIpAddress
+    }
+  }]
 }
 
 module sqlDB 'sqldb.bicep' = [for database in databases:  {

@@ -19,6 +19,8 @@ param sqlDatabases array
 @description('Sql admin ad group for sql server')
 param sqlAdmGroup string
 
+param sqlServerFirewallRules array = []
+
 var teamName = 'businesscentral'
 var shortName = 'bc'
 
@@ -62,12 +64,16 @@ module sqlServer '../_modules/sql/sql.bicep' = {
     environment: environment
     teamName: teamName
     admGroupId: sqlAdmGroup
+    publicAccess: true
+    firewallRules: sqlServerFirewallRules
     databases: [for database in sqlDatabases:  {
       name: 'sqldb-${database.name}-${environment}-weu'
       skuName: database.skuName
     }]
   }
 }
+
+
 
 module dataFactory './datafactory.bicep' = {
   name: 'adf-${teamName}-${environment}-${buildNumber}'
