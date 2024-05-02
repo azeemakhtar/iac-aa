@@ -20,20 +20,7 @@ module grafana '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
-module curityenabler '../_modules/identity/workloadidentity.bicep' = {
-  name: 'wid-${teamName}-curityenabler-service-account-${environment}-${buildNumber}'
-  params: {
-    appName: 'curityenabler-service-account'
-    environment: environment
-    location: location
-    buildNumber: buildNumber
-    tenantName: teamName
-  }
-}
-
 output grafanaPrincipalId string = grafana.outputs.principalId
-output curityEnablerServiceAccountPrincipalId string = curityenabler.outputs.principalId
 output principalIds array = [
   grafana.outputs.principalId
-  curityenabler.outputs.principalId
 ]
