@@ -22,6 +22,9 @@ param sqlAdmGroup string
 @description('SignalR SKU')
 param signalRSku object
 
+@description('Redis SKU')
+param redisSku object
+
 @allowed([ 'Free', 'Basic', 'Standard' ])
 param nftnsSku string
 
@@ -99,9 +102,8 @@ module redis 'redis.bicep' = {
     location: location
     buildNumber: buildNumber
     subnetId: subnet.id
-    redisContribuiters: [ 
-      identity.outputs.marketdataId, identity.outputs.portfolioPrincipalId
-    ]
+    sku: redisSku
+    redisContribuiters: []
   }
 }
 

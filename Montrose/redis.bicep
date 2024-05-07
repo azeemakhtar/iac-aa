@@ -13,6 +13,9 @@ param teamName string
 
 param redisContribuiters array = []
 
+@description('Redis SKU')
+param sku object
+
 @description('Location for all resources')
 param location string = resourceGroup().location
 param subnetId string
@@ -26,8 +29,8 @@ resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
     minimumTlsVersion: '1.2'
     sku: {
       capacity: 1
-      family: 'C'
-      name: 'Basic'
+      family: sku.family
+      name: sku.name
     }
     redisConfiguration: {
       'maxmemory-reserved': '125'

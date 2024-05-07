@@ -29,6 +29,12 @@
                 "name": "Standard_S1",
                 "tier": "Standard"
             }
+        },
+        "redisSku": {
+            "value":  {
+                "family": "C",
+                "name": "Basic"
+            }
         }
     }
 }

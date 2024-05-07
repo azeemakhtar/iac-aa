@@ -231,6 +231,17 @@ module treasuryTrustly '../_modules/identity/workloadidentity.bicep' = {
   }
 }
 
+module instruments '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-instruments-${environment}-${buildNumber}'
+  params: {
+    appName: 'instruments'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
+
 output apigatewayPrincipalId string = montroseApigateway.outputs.principalId
 output companyfactsPrincipalId string = companyfacts.outputs.principalId
 output crmapiPrincipalId string = montroseCrmapi.outputs.principalId
@@ -250,6 +261,7 @@ output pricePrincipalId string = montrosePrice.outputs.principalId
 output testPersonsPrincipalId string = testpersons.outputs.principalId
 output treasuryTrustlyPrincipalId string = treasuryTrustly.outputs.principalId
 output webapiPrincipalId string = montroseWebapi.outputs.principalId
+output instrumentsPrincipalId string = instruments.outputs.principalId
 
 output montroseIds array = [
   companyfacts.outputs.principalId
@@ -271,4 +283,5 @@ output montroseIds array = [
   priceHistory.outputs.principalId
   testpersons.outputs.principalId
   treasuryTrustly.outputs.principalId
+  instruments.outputs.principalId
 ]
