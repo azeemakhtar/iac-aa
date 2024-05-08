@@ -83,5 +83,6 @@ module dataFactory './datafactory.bicep' = {
     location: location
     environment: environment
     teamName: teamName
+    dataFactoryName: 'adf-${teamName}-integration-${environment}'
   }
 }

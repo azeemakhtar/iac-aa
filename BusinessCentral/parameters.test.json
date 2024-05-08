@@ -5,7 +5,7 @@
         "sqlDatabases": {
             "value": [
                 {
-                    "name": "businesscentral",
+                    "name": "businesscentral-integration",
                     "skuName": "Basic"
                 }
             ]

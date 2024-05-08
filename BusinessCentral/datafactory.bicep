@@ -10,7 +10,8 @@ param environment string
 
 @description('Team resource name')
 param teamName string
-var dataFactoryName  = 'adf-${teamName}-${environment}-weu'
+
+param dataFactoryName string = 'adf-${teamName}-${environment}-weu'
 
 
 @description('Subnet id')
@@ -88,14 +89,14 @@ module adfPrivateDns '../_modules/network/privateDns.bicep' = {
 }
 
 
-var portalPrivateDnsZoneId = resourceId('ac5f16ed-4024-4b4c-ae78-0992d01c1f34', 'rg-privatednszones-shared-weu', 'Microsoft.Network/privateDnsZones', 'privatelink.adf.azure.com')
-module adfPortalPrivateDns '../_modules/network/privateDns.bicep' = {
-  name: '${dataFactoryName}-adfportaldns-${buildNumber}'
-  params: {
-    privateDnsZoneId: portalPrivateDnsZoneId
-    privateEndpointName: adfPrivateEndpoint.outputs.privateEndpointName
-  }
-}
+// var portalPrivateDnsZoneId = resourceId('ac5f16ed-4024-4b4c-ae78-0992d01c1f34', 'rg-privatednszones-shared-weu', 'Microsoft.Network/privateDnsZones', 'privatelink.adf.azure.com')
+// module adfPortalPrivateDns '../_modules/network/privateDns.bicep' = {
+//   name: '${dataFactoryName}-adfportaldns-${buildNumber}'
+//   params: {
+//     privateDnsZoneId: portalPrivateDnsZoneId
+//     privateEndpointName: adfPrivateEndpoint.outputs.privateEndpointName
+//   }
+// }
 
 // resource dataFactoryLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
 //   parent: dataFactory
