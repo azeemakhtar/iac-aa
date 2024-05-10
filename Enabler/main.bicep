@@ -15,11 +15,9 @@ param location string = resourceGroup().location
 
 var teamName = 'enabler'
 var admTeamSid = '1b9d9bfd-0831-4834-9b78-9069fdc2c55d'
-
 var vnetRgName = 'rg-vnet-${environment}-weu'
 var vnetName = 'vnet-${environment}-weu'
 var subnetName = 'snet-${teamName}-${environment}-weu'
-
 var environmentConfig = {
   dev: {
     grafana: '9ae186f0-6a44-4970-b76f-a748cfda9466'
@@ -32,6 +30,20 @@ var environmentConfig = {
   }
   prod: {
     grafana: '801e7cd3-5725-4c2b-91b4-a4e21f43d790'
+  }
+}
+var appInsightEnvironmentSettings = {
+  dev: {
+    dailyCap: 2
+  }
+  test: {
+    dailyCap: 2
+  }
+  preprod: {
+    dailyCap: 2
+  }
+  prod: {
+    dailyCap: 10
   }
 }
 
@@ -92,5 +104,16 @@ module fileshare '../_modules/storage/fileshare.bicep' = {
   params: {
     shareName: 'share-grafana-${environment}'
     stoAccountName: storage.outputs.stoName
+  }
+}
+
+module appinsights '../_modules/applicationinsights/applicationinsights.bicep' = {
+  name: 'appinsights-${teamName}-${environment}-${buildNumber}'
+  params: {
+    teamName: teamName
+    location: location
+    environment: environment
+    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
+    logRetention: 90
   }
 }
