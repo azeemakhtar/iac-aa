@@ -143,9 +143,20 @@ module personalaccountdealingservice '../_modules/identity/workloadidentity.bice
   }
 }
 
+module eodpriceProxyService '../_modules/identity/workloadidentity.bicep' = {
+  name: 'wid-${teamName}-eodprice-proxy-${environment}-${buildNumber}'
+  params: {
+    appName: 'eodprice-proxy'
+    environment: environment
+    location: location
+    buildNumber: buildNumber
+    tenantName: teamName
+  }
+}
+
 output cairocncfeePrincipalId string = cairocncfee.outputs.principalId
 output cairofundscreeningPrincipalId string = cairofundscreening.outputs.principalId
-output depreciationserviceapiPrincipalId string = depreciationserviceapi.outputs.principalId
+output eodpriceProxyServicePrincipalId string = eodpriceProxyService.outputs.principalId
 output esgServicePrincipalId string = esgService.outputs.principalId
 output fundscreeningServiceApiPrincipalId string = fundscreening.outputs.principalId
 output holdingfundscreeningPrincipalId string = holdingfundscreening.outputs.principalId
@@ -160,6 +171,7 @@ output principalIds array = [
   cairocncfee.outputs.principalId
   cairofundscreening.outputs.principalId
   depreciationserviceapi.outputs.principalId
+  eodpriceProxyService.outputs.principalId
   esgService.outputs.principalId
   fundscreening.outputs.principalId
   holdingfundscreening.outputs.principalId
