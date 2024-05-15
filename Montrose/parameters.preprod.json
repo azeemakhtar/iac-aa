@@ -48,6 +48,13 @@
                 "family": "C",
                 "name": "Standard"
             }
+        },
+        "evhnsSku": {
+            "value": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 1
+            }
         }
     }
 }

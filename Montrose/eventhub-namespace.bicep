@@ -14,6 +14,9 @@ param subnetId string
 @description('Build number to use for tagging deployments')
 param buildNumber string
 
+@description('EventHubs SKU')
+param sku object
+
 param eventHubsReceivers array = []
 param eventHubsSenders array = []
 
@@ -22,9 +25,9 @@ resource eventHubNamespace 'Microsoft.EventHub/namespaces@2023-01-01-preview' = 
   name: eventHubNamespaceName
   location: location
   sku: {
-    name: 'Standard'
-    tier: 'Standard'
-    capacity: 1
+    name: sku.name
+    tier: sku.tier
+    capacity: sku.capacity
   }
   properties: {
     minimumTlsVersion: '1.2'

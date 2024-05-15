@@ -35,6 +35,13 @@
                 "family": "C",
                 "name": "Basic"
             }
-        }
+        },
+        "evhnsSku": {
+            "value": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 1
+            }
+        }      
     }
 }

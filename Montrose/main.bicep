@@ -25,6 +25,9 @@ param signalRSku object
 @description('Redis SKU')
 param redisSku object
 
+@description('EventHubs SKU')
+param evhnsSku object
+
 @allowed([ 'Free', 'Basic', 'Standard' ])
 param nftnsSku string
 
@@ -128,6 +131,7 @@ module eventHubNamespace 'eventhub-namespace.bicep' = {
     subnetId: subnet.id
     teamName: teamName
     location: location
+    sku: evhnsSku
     eventHubsReceivers: [
       identity.outputs.marketdataId
       identity.outputs.priceHistoryId
