@@ -27,7 +27,8 @@
                 },
                 {
                     "name": "news-service",
-                    "skuName": "Basic"
+                    "skuName": "S0",
+                    "storageInBytes": 10737418240
                 }
             ]
         },
