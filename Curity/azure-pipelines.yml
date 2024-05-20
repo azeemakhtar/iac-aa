@@ -17,9 +17,9 @@ pool:
 
 
 variables:
-- template: ../.azure-pipelines/variables.yml
-  parameters:
-    teamName: curity
+  - template: ../.azure-pipelines/variables.yml
+    parameters:
+      teamName: curity
   - name: devResourceGroup
     value: 'rg-curity-dev-weu'
   - name: testResourceGroup

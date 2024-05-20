@@ -89,10 +89,20 @@ module sqlServer '../_modules/sql/sql.bicep' = {
     environment: environment
     teamName: teamName
     admGroupId: sqlAdmGroup
+    azureADOnlyAuthentication: false
     databases: [for database in sqlDatabases:  {
       name: 'sqldb-${database.name}-${environment}-weu'
       skuName: database.skuName
     }]
+  }
+}
+
+module sqlAlerts '../_modules/sql/sql-alerts.bicep' = {
+  name: 'sqldbalerts-${teamName}-${environment}-${buildNumber}'
+  params: {
+    environment: environment
+    teamName: teamName
+    location: location
   }
 }
 
