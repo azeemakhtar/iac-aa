@@ -132,3 +132,14 @@ module sourceMapsBlob '../_modules/storage/blob.bicep' = {
     ]
   }
 }
+
+module appinsights '../_modules/applicationinsights/applicationinsights.bicep' = {
+  name: 'appinsights-${teamName}-${environment}-${buildNumber}'
+  params: {
+    teamName: teamName
+    location: location
+    environment: environment
+    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
+    logRetention: 90
+  }
+}
