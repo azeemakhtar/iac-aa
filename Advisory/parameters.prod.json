@@ -38,6 +38,15 @@
         },
         "appInsightEnvironmentSettings": {
             "value": {
+                "dev": {
+                    "dailyCap": 2
+                },
+                "test": {
+                    "dailyCap": 2
+                },
+                "preprod": {
+                    "dailyCap": 2
+                },
                 "prod": {
                     "dailyCap": 10
                 }
