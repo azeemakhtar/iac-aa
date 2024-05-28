@@ -41,6 +41,21 @@ var environmentConfig = {
   }
 }
 
+var appInsightEnvironmentSettings = {
+  dev: {
+    dailyCap: 2
+  }
+  test: {
+    dailyCap: 2
+  }
+  preprod: {
+    dailyCap: 2
+  }
+  prod: {
+    dailyCap: 10
+  }
+}
+
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = {
   name: vnetName
   scope: resourceGroup(vnetRgName)
@@ -100,5 +115,16 @@ module sqlAlerts '../_modules/sql/sql-alerts.bicep' = {
     environment: environment
     teamName: teamName
     location: location
+  }
+}
+
+module appinsights '../_modules/applicationinsights/applicationinsights.bicep' = {
+  name: 'appinsights-${teamName}-${environment}-${buildNumber}'
+  params: {
+    teamName: teamName
+    location: location
+    environment: environment
+    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
+    logRetention: 90
   }
 }
