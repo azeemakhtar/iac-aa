@@ -22,7 +22,20 @@ param sqlAdmGroup string
 param identityVerificationId string
 
 @description('App Insights environment settings')
-param appInsightEnvironmentSettings = json(loadTextContent('./parameters.dev.json')) 
+param appInsightEnvironmentSettings = {
+  dev: {
+    dailyCap: 2
+  }
+  test: {
+    dailyCap: 2
+  }
+  preprod: {
+    dailyCap: 2
+  }
+  prod: {
+    dailyCap: 10
+  }
+} 
 
 var teamName = 'advisory'
 var vnetRgName = 'rg-vnet-${environment}-weu'
