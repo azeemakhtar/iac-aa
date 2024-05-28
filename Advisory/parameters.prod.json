@@ -35,6 +35,13 @@
         },
         "identityVerificationId":{
             "value": "479a69b6-05b4-4959-a263-32eaa8faa7ed"
+        },
+        "appInsightEnvironmentSettings": {
+            "value": {
+                "prod": {
+                    "dailyCap": 10
+                }
+            }
         }
     }
 }

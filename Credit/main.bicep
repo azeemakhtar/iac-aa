@@ -19,6 +19,9 @@ param sqlDatabases array
 @description('Sql admin ad group for sql server')
 param sqlAdmGroup string
 
+@description('App insight environment settings')
+param appInsightEnvironementSettings object
+
 var teamName = 'credit'
 var admTeamSid = '884cf343-0ab9-4473-9100-0fae87311f43' //az-grp-dep-Team Credit-Admin
 
@@ -38,21 +41,6 @@ var environmentConfig = {
   }
   prod: {
     standardCollateralRatioImportJob: 'a82e573a-e40b-4cd0-8f5f-830cb0d284c9'
-  }
-}
-
-var appInsightEnvironmentSettings = {
-  dev: {
-    dailyCap: 2
-  }
-  test: {
-    dailyCap: 2
-  }
-  preprod: {
-    dailyCap: 2
-  }
-  prod: {
-    dailyCap: 10
   }
 }
 
