@@ -143,7 +143,7 @@ module appinsights '../_modules/applicationinsights/applicationinsights.bicep' =
     teamName: teamName
     location: location
     environment: environment
-    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
+    //dailyCap: appInsightEnvironmentSettings[environment].dailyCap
     logRetention: 90
   }
 }
