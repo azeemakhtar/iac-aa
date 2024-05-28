@@ -21,10 +21,6 @@ param sqlAdmGroup string
 
 param identityVerificationId string
 
-@description('App insight environment settings')
-param appInsightEnvironementSettings object
-
-
 var teamName = 'advisory'
 var vnetRgName = 'rg-vnet-${environment}-weu'
 var vnetName = 'vnet-${environment}-weu'
