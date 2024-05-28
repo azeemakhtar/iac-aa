@@ -27,6 +27,21 @@ var vnetName = 'vnet-${environment}-weu'
 var subnetName = 'snet-${teamName}-${environment}-weu'
 var admTeamSid = '51a0281a-6730-4b16-99f7-269d81769f6f'
 
+var appInsightEnvironmentSettings = {
+  dev: {
+    dailyCap: 2
+  }
+  test: {
+    dailyCap: 2
+  }
+  preprod: {
+    dailyCap: 2
+  }
+  prod: {
+    dailyCap: 10
+  }
+}
+
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = {
   name: vnetName
   scope: resourceGroup(vnetRgName)
