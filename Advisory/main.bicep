@@ -21,8 +21,8 @@ param sqlAdmGroup string
 
 param identityVerificationId string
 
-//@description('App Insights environment settings')
-//param appInsightEnvironmentSettings object
+@description('App Insights environment settings')
+param appInsightEnvironmentSettings object
 
 param dailyCap int
 param logRetention int
@@ -145,7 +145,7 @@ module appinsights '../_modules/applicationinsights/applicationinsights.bicep' =
     teamName: teamName
     location: location
     environment: environment
-    dailyCap: dailyCap
-    logRetention: logRetention
+    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
+    logRetention: appInsightEnvironmentSettings[environment].logRetention
   }
 }
