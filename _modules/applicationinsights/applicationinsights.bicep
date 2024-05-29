@@ -18,7 +18,7 @@ var appInsightsName = 'appi-${teamName}-${environment}-weu'
 var logAnalyticsRgName = 'rg-logs-${environment}-weu'
 var logAnalyticsName = 'log-defaultlogging-${environment}-weu'
 var defaultDailyCap = environment == 'prod' ? 10 : 2
-var dailyCapVar = dailyCap == -1 ? defaultDailCap : dailyCap
+var dailyCapVar = dailyCap == -1 ? defaultDailyCap : dailyCap
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsName
