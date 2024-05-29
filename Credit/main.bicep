@@ -102,12 +102,3 @@ module sqlAlerts '../_modules/sql/sql-alerts.bicep' = {
     location: location
   }
 }
-
-module appinsights '../_modules/applicationinsights/applicationinsights.bicep' = {
-  name: 'appinsights-${teamName}-${environment}-${buildNumber}'
-  params: {
-    teamName: teamName
-    location: location
-    environment: environment
-  }
-}
