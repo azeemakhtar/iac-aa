@@ -12,13 +12,6 @@
         },
         "sqlAdmGroup":{
             "value": "25f4cca7-0c66-45fb-b757-3b3e665f5fda"
-        },
-        "appInsightEnvironmentSettings": {
-            "value": {
-                "prod": {
-                    "dailyCap": 10
-                }
-            }
         }
     }
 }

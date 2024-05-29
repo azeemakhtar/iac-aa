@@ -19,9 +19,6 @@ param sqlDatabases array
 @description('Sql admin ad group for sql server')
 param sqlAdmGroup string
 
-@description('App insight environment settings')
-param appInsightEnvironementSettings object
-
 var teamName = 'credit'
 var admTeamSid = '884cf343-0ab9-4473-9100-0fae87311f43' //az-grp-dep-Team Credit-Admin
 
