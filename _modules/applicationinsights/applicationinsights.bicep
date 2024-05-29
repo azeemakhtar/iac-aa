@@ -9,7 +9,7 @@ param location string
 param environment string
 
 @description('Daily data volume cap in GB')
-param dailyCap int = 2
+param dailyCap int = -1
 
 @description('Log retention period in days')
 param logRetention int = 90
@@ -17,6 +17,8 @@ param logRetention int = 90
 var appInsightsName = 'appi-${teamName}-${environment}-weu'
 var logAnalyticsRgName = 'rg-logs-${environment}-weu'
 var logAnalyticsName = 'log-defaultlogging-${environment}-weu'
+var defaultDailyCap = environment == 'prod' ? 10 : 2
+var dailyCapVar = dailyCap == -1 ? defaultDailCap : dailyCap
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
   name: logAnalyticsName
@@ -31,7 +33,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
     Application_Type: 'web'
     Flow_Type: 'Bluefield'
     Request_Source: 'rest'
-    RetentionInDays: 90
+    RetentionInDays: logRetention
     WorkspaceResourceId: logAnalyticsWorkspace.id
   }
 }
@@ -41,7 +43,7 @@ resource appInsightsPricingPlan 'Microsoft.Insights/components/pricingPlans@2017
   name: 'current'
   properties: {
     planType: 'Basic'
-    cap: dailyCap
+    cap: dailyCapVar
     warningThreshold: 70
     stopSendNotificationWhenHitCap: false
     stopSendNotificationWhenHitThreshold: false

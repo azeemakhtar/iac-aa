@@ -21,12 +21,6 @@ param sqlAdmGroup string
 
 param identityVerificationId string
 
-@description('App Insights environment settings')
-param appInsightEnvironmentSettings object
-
-param dailyCap int
-param logRetention int
-
 var teamName = 'advisory'
 var vnetRgName = 'rg-vnet-${environment}-weu'
 var vnetName = 'vnet-${environment}-weu'
@@ -145,7 +139,5 @@ module appinsights '../_modules/applicationinsights/applicationinsights.bicep' =
     teamName: teamName
     location: location
     environment: environment
-    dailyCap: cap
-    logRetention: RetentionInDays
   }
 }
