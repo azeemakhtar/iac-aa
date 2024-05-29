@@ -9,10 +9,10 @@ param location string
 param environment string
 
 @description('Daily data volume cap in GB')
-param dailyCap int
+param dailyCap int = 2
 
 @description('Log retention period in days')
-param logRetention int
+param logRetention int = 90
 
 var appInsightsName = 'appi-${teamName}-${environment}-weu'
 var logAnalyticsRgName = 'rg-logs-${environment}-weu'
