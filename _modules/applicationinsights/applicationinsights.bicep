@@ -31,7 +31,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
     Application_Type: 'web'
     Flow_Type: 'Bluefield'
     Request_Source: 'rest'
-    RetentionInDays: logRetention
+    RetentionInDays: 90
     WorkspaceResourceId: logAnalyticsWorkspace.id
   }
 }

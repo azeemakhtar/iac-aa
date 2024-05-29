@@ -145,7 +145,7 @@ module appinsights '../_modules/applicationinsights/applicationinsights.bicep' =
     teamName: teamName
     location: location
     environment: environment
-    dailyCap: appInsightEnvironmentSettings[environment].dailyCap
-    logRetention: appInsightEnvironmentSettings[environment].logRetention
+    dailyCap: cap
+    logRetention: RetentionInDays
   }
 }
