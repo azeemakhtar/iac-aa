@@ -24,6 +24,9 @@ param identityVerificationId string
 //@description('App Insights environment settings')
 //param appInsightEnvironmentSettings object
 
+param dailyCap int
+param logRetention int
+
 var teamName = 'advisory'
 var vnetRgName = 'rg-vnet-${environment}-weu'
 var vnetName = 'vnet-${environment}-weu'
